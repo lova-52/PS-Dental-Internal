@@ -1,0 +1,32 @@
+workflows:
+  react-native-expo:
+    name: Build React Native Expo App
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        PACKAGE_NAME: "com.example.myapp"
+        BUNDLE_ID: "com.example.myapp"
+      node: latest
+    scripts:
+      - name: Cài đặt phụ thuộc npm
+        script: |
+          npm install
+      - name: Chạy Expo Prebuild
+        script: |
+          npx expo prebuild
+      - name: Cài đặt CocoaPods cho iOS
+        script: |
+          cd ios && pod install
+      - name: Xây dựng Android release
+        script: |
+          cd android
+          ./gradlew bundleRelease
+      - name: Xây dựng iOS IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE.xcworkspace" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - android/app/build/outputs/**/*.aab
+      - build/ios/ipa/*.ipa
