@@ -23,4 +23,8 @@ export const Colors = {
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
+
+  GOLD: "#d29b1f", // vàng nhạt
+  GOLD_DEEP: "#b88418", // vàng đậm
+  LIGHT_GOLD: "#f5e1a4", // vàng nhạt hơn
 };
